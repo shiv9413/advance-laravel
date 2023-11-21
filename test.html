@@ -1,0 +1,99 @@
+<html>
+    <head></head>
+    <style>
+        .accordion {
+  background-color: #1e1e1e;
+  color: #c0b9b4;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1em;
+  transition: 0.4s;
+  margin: 0 0 2px 0;
+}
+
+ul.track-listing {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.active,
+.accordion:hover {
+  background-color: #c0b9b4;
+  color: #1e1e1e;
+}
+
+.accordion:after {
+  content: 'LYRICS \002B ';
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: #1e1e1e;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  color: #c0b9b4;
+}
+    </style>
+    <body>
+        <ul class="track-listing">
+            <li>
+              <button class="accordion">TITLE</button>
+              <div class="panel">
+                <p>Panel content</p>
+              </div>
+            </li>
+            <li>
+              <button class="accordion">TITLE</button>
+              <div class="panel">
+                <p>Panel content</p>
+              </div>
+            </li>
+            <li>
+              <button class="accordion">TITLE</button>
+              <div class="panel">
+                <p>Panel content</p>
+              </div>
+            </li>
+          </ul>
+    </body>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+
+for (var i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    // Close all other accordions
+    for (var j = 0; j < acc.length; j++) {
+      var button = acc[j];
+      
+      if (button === this) continue;
+      
+      button.classList.remove("active");
+      var panel = button.nextElementSibling;
+      panel.style.maxHeight = null;
+    }
+
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+    </script>
+</html>

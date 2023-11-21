@@ -37,3 +37,26 @@ Route::get('/file', function () {
 
     return response($pdf)->header('Content-Type', 'application/pdf');
 });
+
+Route::get('/check',function(){
+    $ip = '103.174.10.78'; 
+  
+    // Use JSON encoded string and converts 
+    // it into a PHP variable 
+    $ipdat = @json_decode(file_get_contents( 
+        "http://www.geoplugin.net/json.gp?ip=" . $ip)); 
+    
+    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n"; 
+    echo 'City Name: ' . $ipdat->geoplugin_city . "\n"; 
+    echo 'Continent Name: ' . $ipdat->geoplugin_continentName . "\n"; 
+    echo 'Latitude: ' . $ipdat->geoplugin_latitude . "\n"; 
+    echo 'Longitude: ' . $ipdat->geoplugin_longitude . "\n"; 
+    echo 'Currency Symbol: ' . $ipdat->geoplugin_currencySymbol . "\n"; 
+    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n"; 
+    echo 'Timezone: ' . $ipdat->geoplugin_timezone; 
+});
+
+Route::get('/cookie',function(){
+    $mycookie = setcookie('mycookie', 'myvalue', time() + 30*24*60*60, "/");
+    print_r($mycookie);
+});
