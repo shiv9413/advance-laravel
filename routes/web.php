@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/calendar',function(){
+    return view('calendar');
+});
+
 Route::get('/file', function () {
     // Replace 'your-username' and 'your-api-key' with your Pdfcrowd credentials
     $username = 'obligations';
