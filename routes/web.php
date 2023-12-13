@@ -13,54 +13,20 @@ use Vendor\Pdfcrowd\Pdfcrowd;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+// if(in_array(\Request::segment(1),\Config::get('app.alt_langs'))){
+//     \App::setLocale(\Request::segment(1));
+//     Config::set('app.locale_prefix',\Request::segment(1));
+// }
+
+// Route::group(['prefix' => \Config::get('app.locale_prefix')],function(){
+//    //
+// });
 
 Route::get('/calendar',function(){
     return view('calendar');
 });
 
-Route::get('/file', function () {
-    // Replace 'your-username' and 'your-api-key' with your Pdfcrowd credentials
-    $username = 'obligations';
-    $apiKey = '3258f988c032d72a74e8fb5feb83deb5';
-
-    $pdfcrowd = new Pdfcrowd($username, $apiKey);
-
-    $html = '<html><body><h1>Hello, Pdfcrowd!</h1></body></html>';
-
-    $options = [
-        'encoding' => 'utf-8',
-        'dpi' => 300,
-    ];
-
-    // Convert HTML to PDF
-    $pdf = $pdfcrowd->convertHtml($html, $options);
-
-    return response($pdf)->header('Content-Type', 'application/pdf');
-});
-
-Route::get('/check',function(){
-    $ip = '103.174.10.78'; 
-  
-    // Use JSON encoded string and converts 
-    // it into a PHP variable 
-    $ipdat = @json_decode(file_get_contents( 
-        "http://www.geoplugin.net/json.gp?ip=" . $ip)); 
-    
-    echo 'Country Name: ' . $ipdat->geoplugin_countryName . "\n"; 
-    echo 'City Name: ' . $ipdat->geoplugin_city . "\n"; 
-    echo 'Continent Name: ' . $ipdat->geoplugin_continentName . "\n"; 
-    echo 'Latitude: ' . $ipdat->geoplugin_latitude . "\n"; 
-    echo 'Longitude: ' . $ipdat->geoplugin_longitude . "\n"; 
-    echo 'Currency Symbol: ' . $ipdat->geoplugin_currencySymbol . "\n"; 
-    echo 'Currency Code: ' . $ipdat->geoplugin_currencyCode . "\n"; 
-    echo 'Timezone: ' . $ipdat->geoplugin_timezone; 
-});
-
-Route::get('/cookie',function(){
-    $mycookie = setcookie('mycookie', 'myvalue', time() + 30*24*60*60, "/");
-    print_r($mycookie);
-});
