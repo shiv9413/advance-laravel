@@ -34,37 +34,105 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 Name : Gagan Deep Kashyap
 Profile : Software Developer(Java + Laravel)
 
-## Laravel Sponsors
+## Integration Vue Js With Laravel
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Step 1 : Installing Dependencies and Building Assets
 
-### Premium Partners
+To install the necessary frontend dependencies and build the assets, run the following commands:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+npm install
+npm run dev
 
-## Contributing
+Step 2 : Installing Vue.js and Vue Loader
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To enhance the development experience when working with Vue.js components, we’ll install Vue Loader. Vue Loader is the Webpack loader that enables writing single-file Vue components. It simplifies the component structure by combining HTML, CSS, and JavaScript in a single file.
 
-## Code of Conduct
+To install Vue Loader, run the following command:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+npm install vue@next vue-loader@next
 
-## Security Vulnerabilities
+Step 3 : Installing Vue.js Plugin for Vite
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Vite is a next-generation front-end build tool, and Laravel provides a plugin to integrate it with your Laravel application. Install the Vue.js plugin for Vite by running the following command:
+
+npm i @vitejs/plugin-vue 
+
+Step 4 : Updating the Vite Configuration
+
+To configure Vite, open the vite.config.js file and update it with the following code:
+
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+    plugins: [
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+            refresh: true,
+        }),
+    ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+            'vue': 'vue/dist/vue.esm-bundler.js'
+        },
+    },
+});
+
+Step 5 : Updating the app.js File
+
+Open the app.js file and update it as follows:
+
+import './bootstrap';
+import { createApp } from 'vue';
+
+const app = createApp({});
+
+app.mount("#app");
+
+Step 6 : Modifying Blade Templates
+
+To make Vue.js components work with Laravel’s Blade templating engine, you need to make a few modifications to the blade files. Open the app.blade.php and guest.blade.php files and add id="app" to their parent elements.
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100" id="app">
+
+Step 7 :  Creating Vue.js Components
+
+Create a new folder named “components” inside the resources/js directory. Inside the "components" folder, create a Vue.js component file, such as ComponentA.vue, and define the component's template and logic. For example:
+
+<template>
+    <h1>Working</h1>
+</template>
+
+
 
 ## License
 
